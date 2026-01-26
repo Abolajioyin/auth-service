@@ -1,7 +1,20 @@
 from fastapi import FastAPI
+from app.api.auth import router as auth_router
+from app.api.ai import router as ai_router
 
-app = FastAPI(title="Auth Service")
+
+
+
+app = FastAPI()
 
 @app.get("/health")
-def health_check():
+def health():
     return {"status": "ok"}
+
+app.include_router(auth_router, prefix="/auth", tags=["auth"])
+from app.api.ai import router as ai_router
+
+app.include_router(ai_router)
+
+
+
