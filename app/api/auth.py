@@ -1,44 +1,79 @@
-from fastapi import APIRouter, HTTPException
+print("AUTH ROUTER LOADED")
+
+from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, EmailStr
-from uuid import uuid4
 
-from app.core.security import get_password_hash
-
+from app.core.security import (
+    get_password_hash,
+    verify_password,
+    create_access_token
+)
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-# In-memory user store (temporary)
+# TEMP in-memory user store
 fake_users_db = {}
 
 
+# =====================
+# Schemas
+# =====================
 class RegisterRequest(BaseModel):
     email: EmailStr
-    username: str
     password: str
 
 
-class RegisterResponse(BaseModel):
-    id: str
+class LoginRequest(BaseModel):
     email: EmailStr
-    username: str
+    password: str
 
 
-@router.post("/register", response_model=RegisterResponse)
-def register_user(data: RegisterRequest):
-    if data.email in fake_users_db:
-        raise HTTPException(status_code=400, detail="Email already registered")
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
 
-    user_id = str(uuid4())
-    hashed_password = get_password_hash(data.password)
 
-    fake_users_db[data.email] = {
-        "id": user_id,
-        "email": data.email,
-        "username": data.username,
-        "hashed_password": hashed_password,
+# =====================
+# Register
+# =====================
+@router.post("/register", status_code=201)
+def register_user(payload: RegisterRequest):
+    if payload.email in fake_users_db:
+        raise HTTPException(status_code=400, detail="User already exists")
+
+    fake_users_db[payload.email] = {
+        "email": payload.email,
+        "hashed_password": get_password_hash(payload.password)
     }
+
+    return {"message": "User registered successfully"}
+
+
+# =====================
+# Login
+# =====================
+@router.post("/login", response_model=TokenResponse)
+def login_user(payload: LoginRequest):
+    user = fake_users_db.get(payload.email)
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials"
+        )
+
+    if not verify_password(payload.password, user["hashed_password"]):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid credentials"
+        )
+
+    access_token = create_access_token(
+        data={"sub": payload.email}
+    )
 
     return {
-        "id": user_id,
-        "email": data.email,
-        "username": data.username,
+        "access_token": access_token,
+        "token_type": "bearer"
     }
+
+
