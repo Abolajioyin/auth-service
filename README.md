@@ -1,74 +1,52 @@
-\# Auth Service (FastAPI)
+# Authenticated AI Inference Service (FastAPI)
 
+A production-style **AI inference API** built with **FastAPI** that provides:
+- **User registration & login**
+- **JWT authentication**
+- **Protected AI inference endpoint** (`/ai/predict`)
+- Clean, scalable project structure designed for real-world ML systems
 
-
-A backend authentication service built with \*\*FastAPI\*\*, designed as a scalable microservice.
-
-
-
-This project is the foundation for user authentication using modern backend practices and will be extended with JWT-based login and registration.
-
-
+> Goal: build an AI Engineer–level portfolio by shipping secure, deployable inference services (not notebooks).
 
 ---
 
+## ✅ Features
 
+### Authentication
+- `POST /auth/register` — create a user
+- `POST /auth/login` — login and receive an access token (JWT)
+- `GET /auth/me` — protected route to verify token + user identity
 
-\## 🚀 Features (Current)
-
-\- FastAPI application setup
-
-\- Health check endpoint (`/health`)
-
-\- Scalable project structure
-
-\- Virtual environment setup
-
-\- Git version control
-
-
+### AI Inference
+- `POST /ai/predict` — protected endpoint for model inference  
+  *(currently supports a baseline inference implementation; upgrade path includes real model artifacts + versioning)*
 
 ---
 
-
-
-\## 🗂 Project Structure
-
-\## 🛠 Tech Stack
-
-\- Python 3.12
-
-\- FastAPI
-
-\- Uvicorn
-
-\- Git \& GitHub
-
-
+## 🛠 Tech Stack
+- Python
+- FastAPI
+- Uvicorn
+- JWT (python-jose)
+- Passlib (password hashing)
+- python-multipart (OAuth2 form login)
+- Git & GitHub
 
 ---
 
+## 📁 Project Structure
 
-
-\## ▶️ Running the Project Locally
-
-
-
-```bash
-
-\# Activate virtual environment
-
-venv\\Scripts\\activate
-
-
-
-\# Run the server
-
-uvicorn app.main:app --reload
-
-
-
-
-
-
-
+```text
+app/
+  main.py
+  api/
+    auth/
+      router.py
+    ai/
+      router.py
+      service.py
+  core/
+    security.py
+    dependencies.py
+requirements.txt
+README.md
