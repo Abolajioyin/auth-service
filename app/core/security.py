@@ -5,7 +5,8 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 
 # Password hashing
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
+
 
 SECRET_KEY = "dev-secret-key"
 ALGORITHM = "HS256"
