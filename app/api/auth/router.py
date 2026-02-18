@@ -1,5 +1,4 @@
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi import Depends
 
 from app.core.dependencies import get_current_user
 from fastapi import Depends
@@ -7,8 +6,6 @@ from fastapi import Depends
 from fastapi import APIRouter, HTTPException, status, Depends
 from pydantic import BaseModel, EmailStr
 
-
-from fastapi.security import OAuth2PasswordRequestForm
 
 from app.core.security import get_password_hash, verify_password, create_access_token
 
@@ -37,8 +34,6 @@ class TokenResponse(BaseModel):
 def ping():
     return {"ok": True}
 
-from fastapi import Depends
-from app.core.dependencies import get_current_user
 
 @router.get("/me")
 def me(current_user=Depends(get_current_user)):
