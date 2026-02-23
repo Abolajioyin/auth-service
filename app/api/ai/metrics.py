@@ -21,4 +21,16 @@ class Metrics:
             return 0.0
         return round(self.total_latency_ms / self.total_requests, 2)
 
-metrics = Metrics()
+# app/api/ai/metrics.py
+
+metrics = {
+    "total_predictions": 0,
+    "last_prediction": None,
+}
+
+def record_prediction():
+    metrics["total_predictions"] += 1
+
+def get_stats():
+    return metrics
+
