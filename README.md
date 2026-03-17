@@ -181,7 +181,7 @@ pytest tests/
 
 Most auth tutorials hand you a library and tell you to call `.login()`. I wanted to understand what's actually happening — token signing, password hashing, route protection, model serving — so I built it myself.
 
-This project is part of my journey from self-taught developer to backend + AI engineer. Follow along on [LinkedIn](#) or [X](#).
+This project is part of my journey from self-taught developer to backend + AI engineer. Follow along on https://www.linkedin.com/in/abolaji-oyinloye-764ab0133
 
 ---
 
