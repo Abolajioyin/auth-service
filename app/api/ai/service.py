@@ -1,10 +1,15 @@
-from app.ml.hf_model import predict as hf_predict
-from app.ml.hf_model import metadata as hf_metadata
-
-
 def run_inference(text: str) -> dict:
-    return hf_predict(text)
-
+    return {
+        "input": text,
+        "prediction": "mock_result",
+        "confidence": 0.95,
+        "note": "live inference coming soon"
+    }
 
 def get_model_metadata() -> dict:
-    return hf_metadata()
+    return {
+        "model": "distilbert-base-uncased",
+        "version": "1.0.0",
+        "status": "model loading disabled on free tier",
+        "inputs": ["text"]
+    }
