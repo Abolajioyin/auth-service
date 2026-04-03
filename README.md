@@ -2,6 +2,8 @@
 
 🚀 **Live demo:** https://auth-service-5ilo.onrender.com/docs
 
+Note: hosted on Render free tier — first load may take 30-60 seconds to wake up.
+
 A production-ready REST API built with **FastAPI** and **Python** that handles user authentication with JWT tokens and serves AI model predictions through a clean, documented API.
 
 Built from scratch as a demonstration of real backend engineering — not a tutorial clone.
