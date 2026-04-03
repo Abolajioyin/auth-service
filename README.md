@@ -1,5 +1,5 @@
 # AuthAPI — Authentication & AI Inference Service
-
+🚀 **Live demo:** https://auth-service-5ilo.onrender.com/docs
 A production-ready REST API built with **FastAPI** and **Python** that handles user authentication with JWT tokens and serves AI model predictions through a clean, documented API.
 
 Built from scratch as a demonstration of real backend engineering — not a tutorial clone.
