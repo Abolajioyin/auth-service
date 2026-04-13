@@ -14,9 +14,11 @@ if not DATABASE_URL:
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
+# Replace postgresql:// with postgresql+psycopg2:// for sync driver
+DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
+
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"sslmode": "require"},
     pool_pre_ping=True,
     pool_recycle=300,
 )
