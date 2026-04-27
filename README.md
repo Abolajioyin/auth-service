@@ -1,8 +1,9 @@
 # AuthAPI — Authentication & AI Inference Service
 
 🚀 **Live demo:** https://auth-service-5ilo.onrender.com/docs
+🌐 **Portfolio:** https://portfolio-murex-theta-23.vercel.app
 
-Note: hosted on Render free tier — first load may take 30-60 seconds to wake up.
+> Note: hosted on Render free tier — first load may take 30-60 seconds to wake up.
 
 A production-ready REST API built with **FastAPI** and **Python** that handles user authentication with JWT tokens and serves AI model predictions through a clean, documented API.
 
@@ -29,6 +30,7 @@ Built from scratch as a demonstration of real backend engineering — not a tuto
 | Auth | JWT (JSON Web Tokens) |
 | Validation | Pydantic |
 | Server | Uvicorn |
+| Database | PostgreSQL (Neon) |
 | AI | HuggingFace Transformers |
 | Docs | Swagger / OpenAPI (auto-generated) |
 
@@ -83,6 +85,7 @@ Create a `.env` file in the root directory:
 SECRET_KEY=your-secret-key-here
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
+DATABASE_URL=your-postgresql-connection-string
 ```
 
 ### Run the server
@@ -91,9 +94,8 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 uvicorn app.main:app --reload
 ```
 
-The API will be live at `http://localhost:8000`
-
-Interactive docs available at `http://localhost:8000/docs`
+Server runs at `http://localhost:8000`
+Interactive docs at `http://localhost:8000/docs`
 
 ---
 
@@ -130,15 +132,6 @@ curl http://localhost:8000/auth/me \
   -H "Authorization: Bearer <your_token>"
 ```
 
-### Run a prediction
-
-```bash
-curl -X POST http://localhost:8000/ai/predict \
-  -H "Authorization: Bearer <your_token>" \
-  -H "Content-Type: application/json" \
-  -d '{"input": "your input data here"}'
-```
-
 ---
 
 ## Project structure
@@ -146,6 +139,7 @@ curl -X POST http://localhost:8000/ai/predict \
 ```
 app/
 ├── main.py                  # App entry point
+├── models.py                # Database models
 ├── api/
 │   ├── auth/
 │   │   └── router.py        # Register, login, /me routes
@@ -154,21 +148,23 @@ app/
 │       └── service.py       # Model inference logic
 └── core/
     ├── security.py          # JWT creation and verification
-    └── dependencies.py      # Route dependencies (get_current_user)
+    ├── database.py          # PostgreSQL connection
+    └── dependencies.py      # Route dependencies
 requirements.txt
 README.md
 ```
 
 ---
 
-## Swagger UI
+## Live Swagger UI
 
-Once the server is running, open `http://localhost:8000/docs` in your browser to get an interactive API explorer where you can test every endpoint without writing any code.
+Test every endpoint without writing any code:
+👉 https://auth-service-5ilo.onrender.com/docs
 
-To test protected routes in Swagger:
-1. Call `/auth/login` and copy the token from the response
+To test protected routes:
+1. Call `/auth/login` and copy the token
 2. Click **Authorize** at the top right
-3. Paste your token as `Bearer <token>`
+3. Enter your email and password
 4. All protected routes are now unlocked
 
 ---
@@ -185,22 +181,21 @@ pytest tests/
 
 Most auth tutorials hand you a library and tell you to call `.login()`. I wanted to understand what's actually happening — token signing, password hashing, route protection, model serving — so I built it myself.
 
-This project is part of my journey from self-taught developer to backend + AI engineer. Follow along on https://www.linkedin.com/in/abolaji-oyinloye-764ab0133
-
 ---
 
 ## Roadmap
 
-- [ ] Deploy to Railway / Render
+- [x] Deploy to Render
+- [x] PostgreSQL database integration
 - [ ] Add refresh token support
 - [ ] Add rate limiting
-- [ ] Expand AI model support
-- [ ] Add Docker support
+- [ ] CI/CD with GitHub Actions
+- [ ] Docker support
 
 ---
 
 ## Author
 
-Built by **Abolaji Habeeb Oyinloye** — backend & AI engineer.
+**Abolaji Habeeb Oyinloye** — Backend & AI Engineer
 
-https://www.linkedin.com/in/abolaji-oyinloye-764ab0133/ · [GitHub](https://github.com/Abolajioyin) ·
+[LinkedIn](https://www.linkedin.com/in/abolaji-oyinloye-764ab0133/) · [GitHub](https://github.com/Abolajioyin) · [Portfolio](https://portfolio-murex-theta-23.vercel.app)
